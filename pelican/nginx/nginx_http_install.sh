@@ -39,3 +39,4 @@ sudo chown -R www-data:www-data /var/www/pelican
 sudo php artisan p:environment:setup
 
 echo "Script completed successfully."
+echo "You should run sudo mariadb-secure-installation to complete mariadb configuration"
