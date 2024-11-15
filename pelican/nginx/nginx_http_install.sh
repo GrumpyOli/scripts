@@ -9,6 +9,9 @@ echo "Nginx installed successfully."
 rm -f /etc/nginx/sites-enabled/default
 echo "Default Nginx configuration removed."
 
+rm -f /etc/nginx/sites-enabled/pelican.conf
+echo "Old Pelican configuration removed."
+
 # Download the pelican.conf file and place it in /etc/nginx/sites-available
 curl -o /etc/nginx/sites-available/pelican.conf https://raw.githubusercontent.com/GrumpyOli/scripts/refs/heads/main/pelican/nginx/pelican_http.conf
 echo "pelican.conf downloaded successfully."
