@@ -14,8 +14,8 @@ echo "Updating package list..."
 sudo apt update
 
 # Install required tools
-echo "Installing tar and unzip..."
-sudo apt install -y tar unzip
+echo "Installing tar, unzip, MariaDB Client, and MariaDB Server..."
+sudo apt install -y tar unzip mariadb-client mariadb-server
 
 # Add PHP repository
 echo "Adding PHP repository..."
