@@ -6,7 +6,7 @@ apt install -y curl
 
 Then, use this command line to launch the script
 ```Bash
-curl -sS https://raw.githubusercontent.com/GrumpyOli/scripts/refs/heads/main/getting_started.sh | sudo bash
+curl -sS https://raw.githubusercontent.com/GrumpyOli/scripts/refs/heads/main/pelican/getting_started.sh | sudo bash
 ```
 
 Then, use this command line to launch the script
