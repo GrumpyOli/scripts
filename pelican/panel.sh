@@ -39,22 +39,27 @@ sudo composer install --quiet --no-dev --optimize-autoloader
 # Install NGINX
 sudo apt install -y -qq nginx
 
-# Ask the user if they want to keep their existing NGINX configuration
-read -p "Do you want to keep your existing NGINX configuration? (y/n): " KEEP_CONFIG
+# Check if the NGINX configuration file already exists
+NGINX_CONFIG="/etc/nginx/sites-available/pelican.conf"
 
-if [[ "$KEEP_CONFIG" == "n" || "$KEEP_CONFIG" == "N" ]]; then
+if [ -f "$NGINX_CONFIG" ]; then
+    # If the file exists, skip creating the new config and keep the existing one
+    echo -e "\nNGINX configuration file already exists. Keeping the current configuration."
+else
+    # If the file doesn't exist, proceed to set up the new configuration
+    echo -e "\nNGINX configuration file doesn't exist. Applying new configuration..."
+
     # Remove the default nginx configuration
     sudo rm /etc/nginx/sites-enabled/default
 
+    # Download the new configuration file
     curl -L https://raw.githubusercontent.com/GrumpyOli/scripts/refs/heads/main/pelican/nginx/http/pelican.conf -o /etc/nginx/sites-available/pelican.conf
 
-    # Enable the new configuration by creating a symlink (only if it was removed or doesn't exist)
+    # Enable the new configuration by creating a symlink
     sudo ln -s /etc/nginx/sites-available/pelican.conf /etc/nginx/sites-enabled/
 
     # Reload NGINX to apply the new configuration
     sudo systemctl reload nginx
 
-    echo -e "\nNGINX configuration for $domain has been successfully set up."
-else
-    echo -e "\nKeeping the existing NGINX configuration."
+    echo -e "\nNGINX configuration has been successfully set up."
 fi
