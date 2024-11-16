@@ -20,7 +20,7 @@ echo -e "\n"
 sudo apt update -qq
 
 # Install required tools
-sudo apt install -y -qq tar unzip mariadb-client mariadb-server
+sudo apt install -y -qq tar unzip mariadb-client mariadb-server whiptail
 
 # Add PHP repository
 sudo apt install -y -qq software-properties-common
