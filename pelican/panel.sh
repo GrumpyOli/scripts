@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Function to check if a file exists
+file_exists() {
+    if [ -e "$1" ]; then
+        return 0  # File exists
+    else
+        return 1  # File does not exist
+    fi
+}
+
 # Starting installation process
 echo -e "\n"
 echo "==============================================="
@@ -39,10 +48,11 @@ sudo composer install --quiet --no-dev --optimize-autoloader
 # Install NGINX
 sudo apt install -y -qq nginx
 
-# Check if the NGINX configuration file already exists
+# Define NGINX configuration file path
 NGINX_CONFIG="/etc/nginx/sites-available/pelican.conf"
 
-if [ -f "$NGINX_CONFIG" ]; then
+# Check if the NGINX configuration file exists using the file_exists function
+if file_exists "$NGINX_CONFIG"; then
     # If the file exists, skip creating the new config and keep the existing one
     echo -e "\nNGINX configuration file already exists. Keeping the current configuration."
 else
