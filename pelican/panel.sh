@@ -86,6 +86,8 @@ fi
 #Installing MariaDB
 curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
 sudo apt install -y mariadb-server
+sudo mysql_secure_installation
+
 
 cd /var/www/pelican
 sudo chmod -R 755 storage/* bootstrap/cache/
