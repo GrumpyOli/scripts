@@ -1,56 +1,60 @@
 #!/bin/bash
 
-# Beautiful header
+# Starting installation process
 echo -e "\n"
 echo "==============================================="
-echo "     Pelican Panel Dependency Installer      "
-echo "  This script will install all dependencies  "
-echo "   needed for the Pelican Panel setup!       "
+echo "    Starting Pelican Panel Dependency Installer "
 echo "==============================================="
 echo -e "\n"
 
 # Update package list
-echo -e "\n"
-echo "==============================================="
-echo "Updating package list..."
-echo "==============================================="
 sudo apt update -qq
 
 # Install required tools
-echo -e "\n"
-echo "==============================================="
-echo "Installing tar, unzip, MariaDB Client, and MariaDB Server..."
-echo "==============================================="
 sudo apt install -y -qq tar unzip mariadb-client mariadb-server
 
 # Add PHP repository
-echo -e "\n"
-echo "==============================================="
-echo "Adding PHP repository..."
-echo "==============================================="
 sudo apt install -y -qq software-properties-common
 sudo add-apt-repository -y ppa:ondrej/php
-sudo apt update -qqsudo
+sudo apt update -qq
 
 # Install PHP 8.3 and extensions
-echo "Installing PHP 8.3 and extensions..."
 sudo apt install -y -qq php8.3 php8.3-fpm php8.3-gd php8.3-mysql php8.3-mbstring php8.3-bcmath php8.3-xml php8.3-curl php8.3-zip php8.3-intl php8.3-sqlite3
 
 # Create the /var/www/pelican folder
-echo "Creating /var/www/pelican folder..."
 sudo mkdir -p /var/www/pelican
 
 # Navigate to the folder
 cd /var/www/pelican
 
 # Download and extract panel.tar.gz
-echo "Downloading and extracting panel.tar.gz..."
 curl -L -s https://github.com/pelican-dev/panel/releases/latest/download/panel.tar.gz | sudo tar -xz -C /var/www/pelican
 
 # Install Composer
-echo "Installing Composer..."
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
 # Run composer install
-echo "Running composer install..."
 sudo composer install --quiet --no-dev --optimize-autoloader
+
+# Install NGINX
+sudo apt install -y -qq nginx
+
+# Ask the user if they want to keep their existing NGINX configuration
+read -p "Do you want to keep your existing NGINX configuration? (y/n): " KEEP_CONFIG
+
+if [[ "$KEEP_CONFIG" == "n" || "$KEEP_CONFIG" == "N" ]]; then
+    # Remove the default nginx configuration
+    sudo rm /etc/nginx/sites-enabled/default
+
+    curl -L https://raw.githubusercontent.com/GrumpyOli/scripts/refs/heads/main/pelican/nginx/http/pelican.conf -o /etc/nginx/sites-available/pelican.conf
+
+    # Enable the new configuration by creating a symlink (only if it was removed or doesn't exist)
+    sudo ln -s /etc/nginx/sites-available/pelican.conf /etc/nginx/sites-enabled/
+
+    # Reload NGINX to apply the new configuration
+    sudo systemctl reload nginx
+
+    echo -e "\nNGINX configuration for $domain has been successfully set up."
+else
+    echo -e "\nKeeping the existing NGINX configuration."
+fi
