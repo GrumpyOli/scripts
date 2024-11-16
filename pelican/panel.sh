@@ -10,18 +10,27 @@ echo "==============================================="
 echo -e "\n"
 
 # Update package list
+echo -e "\n"
+echo "==============================================="
 echo "Updating package list..."
-sudo apt update
+echo "==============================================="
+sudo apt update -qq
 
 # Install required tools
+echo -e "\n"
+echo "==============================================="
 echo "Installing tar, unzip, MariaDB Client, and MariaDB Server..."
+echo "==============================================="
 sudo apt install -y -qq tar unzip mariadb-client mariadb-server
 
 # Add PHP repository
+echo -e "\n"
+echo "==============================================="
 echo "Adding PHP repository..."
+echo "==============================================="
 sudo apt install -y -qq software-properties-common
 sudo add-apt-repository -y ppa:ondrej/php
-sudo apt update
+sudo apt update -qqsudo
 
 # Install PHP 8.3 and extensions
 echo "Installing PHP 8.3 and extensions..."
