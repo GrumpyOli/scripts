@@ -1,4 +1,6 @@
-Make sure curl is installed
+<h1>Welcome to my custom scripts</h1>
+
+Here is some command you can run to 
 
 ```Bash
 apt install -y curl
