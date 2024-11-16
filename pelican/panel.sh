@@ -30,6 +30,15 @@ sudo apt update -qq
 # Install PHP 8.3 and extensions
 sudo apt install -y -qq php8.3 php8.3-fpm php8.3-gd php8.3-mysql php8.3-mbstring php8.3-bcmath php8.3-xml php8.3-curl php8.3-zip php8.3-intl php8.3-sqlite3
 
+#Installing Redis
+sudo curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+sudo echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+sudo apt update -y -qq
+sudo apt install -y -qq redis-server
+
+sudo systemctl enable --now redis-server
+
 # Create the /var/www/pelican folder
 sudo mkdir -p /var/www/pelican
 
@@ -73,3 +82,12 @@ else
 
     echo -e "\nNGINX configuration has been successfully set up."
 fi
+
+#Installing MariaDB
+curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
+sudo apt install -y mariadb-server
+
+cd /var/www/pelican
+sudo chmod -R 755 storage/* bootstrap/cache/
+sudo chown -R www-data:www-data /var/www/pelican
+sudo php artisan p:environment:setup
