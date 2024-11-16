@@ -15,9 +15,11 @@ Command line to install OpenSSH Server
 curl -sS https://raw.githubusercontent.com/GrumpyOli/scripts/refs/heads/main/enable_ssh_server.sh | sudo bash
 ```
 
+<h2>Pelican Panel & Wings</h2>
+
 First, install all dependencies
 ```Bash
-curl -sS https://raw.githubusercontent.com/GrumpyOli/scripts/refs/heads/main/pelican/getting_started.sh | sudo bash
+curl -sS https://raw.githubusercontent.com/GrumpyOli/scripts/refs/heads/main/pelican/panel.sh | sudo bash
 ```
 
 Use this script to install NGINX with HTTP access
