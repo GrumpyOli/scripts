@@ -8,7 +8,8 @@ apt install -y curl
 ```
 
 <h2>OpenSSH Server</h2>
-```
+
+```Bash
 curl -sS https://raw.githubusercontent.com/GrumpyOli/scripts/refs/heads/main/enable_ssh_server.sh | sudo bash
 ```
 
