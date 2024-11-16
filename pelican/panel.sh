@@ -45,7 +45,7 @@ cd /var/www/pelican
 
 # Download and extract panel.tar.gz
 echo "Downloading and extracting panel.tar.gz..."
-curl -L -s https://github.com/pelican-dev/panel/releases/latest/download/panel.tar.gz | sudo tar -xzv -C /var/www/pelican
+curl -L -s https://github.com/pelican-dev/panel/releases/latest/download/panel.tar.gz | sudo tar -xz -C /var/www/pelican
 
 # Install Composer
 echo "Installing Composer..."
